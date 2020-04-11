@@ -1,0 +1,13 @@
+[Unit]
+Description=Execute actions relative to process existance
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=%I
+Group=%I
+ExecStart=/usr/bin/paction
+
+[Install]
+WantedBy=multi-user.target

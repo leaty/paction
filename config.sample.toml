@@ -1,0 +1,18 @@
+tick = 100 # Updates per millisecond
+
+[[action]]
+name = "some action" # Name used in output
+exec = [] # Command to execute when criteria is met
+undo = [] # Command to execute when criteria is no longer met
+
+# Must match this criteria
+[[action.criteria]]
+user = [] # [1000, 1001] - Owned by either
+name = [] # ["someprog", "orthisprog"] - One of these programs
+cmd = [] # ["-lh", "-h"] - Command contains one of these
+
+# Also must match this criteria
+[[action.criteria]]
+user = [] # [1000, 1001] - Owned by either
+name = [] # ["someprog", "orthisprog"] - One of these programs
+cmd = [] # ["-lh", "-h"] - Command contains one of these
