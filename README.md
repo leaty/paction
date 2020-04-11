@@ -6,7 +6,7 @@ The configuration may contain multiple actions, each with multiple or singular c
 
 
 ### Example config
-Stop compton when both `CS:GO` and `OBS Studio` is running. Once criteria is no longer met, start compton again.
+Stop `compton` when both **CS:GO** and **OBS Studio** is running - to get those extra frames you know. Once criteria is no longer met, start compton again.
 
 ```toml
 tick = 100
