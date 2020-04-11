@@ -1,5 +1,5 @@
 # paction
-Execute actions relative to process existance
+Execute actions relative to process existance. I really ought to find a better name for this though.
 
 ## Configuration
 The configuration may contain multiple actions, each with multiple or singular criteria. Default location is `~/.config/paction/config.toml` but see `paction --help` for more. Copy the [sample config](config.sample.toml) for reference when configuring.
