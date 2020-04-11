@@ -9,7 +9,7 @@ The configuration may contain multiple actions, each with multiple or singular c
 Stop compton when both `CS:GO` and `OBS Studio` is running. Once criteria is no longer met, start compton again.
 
 ```toml
-tick = 100 # Updates per millisecond
+tick = 100
 
 [[action]]
 name = "some action" # Name used in output
@@ -27,4 +27,18 @@ cmd = []
 user = [1000]
 name = ["obs"]
 cmd = ["--startreplaybuffer"]
+```
+
+### Running as service
+For X display support (e.g. start a GUI program on `exec`) I recommend running as a user service.
+
+You could run `install.sh` or just follow the steps below.
+
+#### Install as user service
+```bash
+cargo build --release
+cp paction.service ~/.config/systemd/user/
+sudo cp target/release/paction /usr/bin
+systemctl --user enable paction
+systemctl --user start paction
 ```
