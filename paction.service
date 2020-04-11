@@ -5,9 +5,7 @@ Description=Execute actions relative to process existance
 Type=simple
 Restart=always
 RestartSec=1
-User=%I
-Group=%I
 ExecStart=/usr/bin/paction
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

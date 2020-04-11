@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use std::{thread, time};
 use std::error::Error;
-use std::process::{Command, Stdio};
+use std::process::Command;
 use serde::Deserialize;
 use git_version::git_version;
 
@@ -41,9 +41,6 @@ impl Action {
 	fn cmd(&self, cmdtext: &Vec<String>) {
 		let _ = Command::new(&cmdtext[0])
 			.args(&cmdtext[1..])
-			.stdin(Stdio::null())
-			.stdout(Stdio::null())
-			.stderr(Stdio::null())
 			.spawn();
 	}
 
