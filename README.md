@@ -6,7 +6,7 @@ The configuration may contain multiple actions, each with multiple or singular c
 
 
 ### Example config
-Stop `compton` when both **CS:GO** and **OBS Studio** is running - to get those extra frames you know. Once criteria is no longer met, start compton again.
+Stop `compton` when either **CS:GO** or **THUG Pro** *and* **OBS Studio** is running - to get those extra frames you know. Once criteria is no longer met, start compton again.
 
 ```toml
 tick = 500
@@ -16,10 +16,10 @@ name = "some action" # Name used in output
 exec = ["pkill", "compton"]
 undo = ["compton"]
 
-# CS:GO must be running by user 1000
+# CS:GO or THUG Pro must be running by user 1000
 [[action.criteria]]
 user = [1000]
-name = ["csgo_linux64"]
+name = ["csgo_linux64", "THUGPro.exe"]
 cmd = []
 
 # OBS Studio must ALSO be running by user 1000, with the switch --startreplaybuffer
