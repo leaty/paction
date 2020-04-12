@@ -6,7 +6,7 @@ use serde::Deserialize;
 use git_version::git_version;
 
 struct Process {
-	user: u32,
+	ruid: u32,
 	name: String,
 	cmd: String,
 }
@@ -15,6 +15,23 @@ struct Process {
 struct Config {
 	action: Vec<Action>,
 	tick: u64,
+}
+
+impl Config {
+	fn setup(&mut self) {
+		for action in &mut self.action {
+			for criteria in &mut action.criteria {
+				// Convert user to userid
+				for user in &mut criteria.user {
+					criteria.userid.insert(match user {
+						toml::Value::Integer(id) => *id as u32,
+						toml::Value::String(name) => parse_user(name.to_owned()),
+						_ => continue,
+					});
+				}
+			}
+		}
+	}
 }
 
 #[derive(Deserialize)]
@@ -48,7 +65,7 @@ impl Action {
 		let mut met = 0;
 		for r in &mut self.criteria {
 			for p in processes {
-				if r.meets(&p.user, &p.name, &p.cmd) {
+				if r.meets(&p.ruid, &p.name, &p.cmd) {
 					met += 1;
 				}
 			}
@@ -60,14 +77,16 @@ impl Action {
 
 #[derive(Deserialize)]
 struct Criteria {
-	user: HashSet<u32>,
+	user: Vec<toml::Value>,
+	#[serde(skip)]
+	userid: HashSet<u32>,
 	name: HashSet<String>,
 	cmd: HashSet<String>,
 }
 
 impl Criteria {
 	fn meets(&self, ruid: &u32, name: &String, cmd: &String) -> bool { 
-		if (!self.user.is_empty() && !self.user.contains(ruid))
+		if (!self.userid.is_empty() && !self.userid.contains(ruid))
 			|| (!self.name.is_empty() && !self.name.contains(name)) {
 			return false;
 		}
@@ -108,6 +127,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 	let config_file = args.value_of("config").unwrap_or(&default);
 	let config_str = std::fs::read_to_string(&config_file)?;
 	let mut config: Config = toml::from_str(&config_str).unwrap();
+	config.setup();
+
 	let tick = time::Duration::from_millis(config.tick);
 
 	// Service
@@ -147,8 +168,15 @@ fn get_processes() -> Vec<Process> {
 			Err(_e) => continue,
 		};
 
-		processes.push(Process{user: status.ruid, name: status.name, cmd});
+		processes.push(Process{ruid: status.ruid, name: status.name, cmd});
 	}
 
 	processes
+}
+
+fn parse_user(user: String) -> u32 {
+	match user.as_str() {
+		"$USER" => users::get_current_uid(),
+		_ => users::get_user_by_name(&user).unwrap().uid()
+	}
 }
