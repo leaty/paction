@@ -16,15 +16,17 @@ name = "some action" # Name used in output
 exec = ["pkill", "compton"]
 undo = ["compton"]
 
-# CS:GO or THUG Pro must be running by user 1000
+# CS:GO or THUG Pro must be running by the same user as paction
 [[action.criteria]]
-user = [1000]
+user = ["$USER"]
 name = ["csgo_linux64", "THUGPro.exe"]
 cmd = []
 
-# OBS Studio must ALSO be running by user 1000, with the switch --startreplaybuffer
+# OBS Studio must ALSO be running
+# By either "someuser", 1001 or the same user as paction
+# With the switch --startreplaybuffer
 [[action.criteria]]
-user = [1000]
+user = ["someuser", 1001, "$USER"]
 name = ["obs"]
 cmd = ["--startreplaybuffer"]
 ```
