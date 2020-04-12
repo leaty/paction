@@ -1,4 +1,4 @@
-tick = 500 # Updates per millisecond
+tick = 500 # Check every 500ms
 
 [[action]]
 name = "some action" # Name used in output
