@@ -32,11 +32,13 @@ cmd = ["--startreplaybuffer"]
 ```
 
 ### Running as service
-For X display support (e.g. start a GUI program on `exec`) I recommend running as a user service.
+For X display support (e.g. start a GUI program on `exec`) I recommend running as a user service. Note however that the service may need to be modified to start after your display manager, otherwise certain actions/scripts requiring $DISPLAY might not work when the service is automatically started. 
 
-You could run `install.sh` or just follow the steps below.
+Personally I have no valid `After=` target for the service because I don't use a display manager, so I just add `systemctl --user start paction` in `.xinitrc` and omit enabling the service.
 
 #### Install as user service
+You could run `install.sh` and then manually enabling it, or just follow the steps below.
+
 ```bash
 cargo build --release
 cp paction.service ~/.config/systemd/user/
