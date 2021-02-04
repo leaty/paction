@@ -3,7 +3,7 @@ name = "paction"
 description = "Execute actions relative to process existance"
 license = "MIT"
 readme = "README.md"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["leaty <dev@leaty.net>"]
 edition = "2018"
 
