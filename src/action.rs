@@ -30,14 +30,15 @@ impl Action {
 
 	pub fn meets(&mut self, processes: &Vec<Process>) -> bool {
 		let mut met = 0;
-		for r in &mut self.criteria {
+		for c in &mut self.criteria {
 			for p in processes {
-				if r.meets(&p.ruid, &p.name, &p.cmd) {
+				if c.meets(&p.ruid, &p.name, &p.cmd) {
 					met += 1;
+					break;
 				}
 			}
 		}
 
-		met >= self.criteria.len()
+		met == self.criteria.len()
 	}
 }
