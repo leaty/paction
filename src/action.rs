@@ -38,6 +38,6 @@ impl Action {
 			}
 		}
 
-		met == self.criteria.len()
+		met >= self.criteria.len()
 	}
 }
