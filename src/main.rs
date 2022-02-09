@@ -51,12 +51,6 @@ fn main() -> Result<(), Box<dyn Error>> {
 			}
 		}
 
-		// for action in &config.action {
-		// 	for criteria in &action.criteria {
-		// 		println!("{:?}", criteria.cmd);
-		// 	}
-		// }
-
 		thread::sleep(tick);
 	}
 }
