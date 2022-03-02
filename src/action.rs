@@ -1,7 +1,7 @@
 use crate::criteria::Criteria;
 use crate::process::Process;
 use serde::Deserialize;
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 #[derive(Deserialize)]
 pub struct Action {
@@ -25,7 +25,12 @@ impl Action {
 	}
 
 	fn cmd(&self, cmdtext: &Vec<String>) {
-		let _ = Command::new(&cmdtext[0]).args(&cmdtext[1..]).spawn();
+		let _ = Command::new(&cmdtext[0])
+			.args(&cmdtext[1..])
+			.stdin(Stdio::null())
+			.stdout(Stdio::null())
+			.stderr(Stdio::null())
+			.spawn();
 	}
 
 	pub fn meets(&mut self, processes: &Vec<Process>) -> bool {
