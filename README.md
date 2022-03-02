@@ -6,15 +6,15 @@ The configuration may contain multiple actions, each with multiple or singular c
 
 
 ### Example config
-Stop `compton` when either **CS:GO** or **THUG Pro** *and* **OBS Studio** is running - to get those extra frames you know. Once criteria is no longer met, start compton again.
+Stop `picom` when either **CS:GO** or **THUG Pro** *and* **OBS Studio** is running - to get those extra frames you know. Once criteria is no longer met, start picom again.
 
 ```toml
 tick = 500
 
 [[action]]
 name = "some action" # Name used in output
-exec = ["pkill", "compton"]
-undo = ["compton"]
+exec = ["pkill", "picom"]
+undo = ["picom"]
 
 # CS:GO or THUG Pro must be running by the same user as paction
 [[action.criteria]]
